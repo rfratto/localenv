@@ -1,0 +1,65 @@
+{
+    "dependencies": [
+        {
+            "name": "consul-mixin",
+            "source": {
+                "git": {
+                    "remote": "https://github.com/grafana/jsonnet-libs",
+                    "subdir": "consul-mixin"
+                }
+            },
+            "version": "master"
+        },
+        {
+            "name": "mixin-utils",
+            "source": {
+                "git": {
+                    "remote": "https://github.com/grafana/jsonnet-libs",
+                    "subdir": "mixin-utils"
+                }
+            },
+            "version": "master"
+        },
+        {
+            "name": "consul",
+            "source": {
+                "git": {
+                    "remote": "https://github.com/grafana/jsonnet-libs",
+                    "subdir": "consul"
+                }
+            },
+            "version": "master"
+        },
+        {
+            "name": "ksonnet-util",
+            "source": {
+                "git": {
+                    "remote": "https://github.com/grafana/jsonnet-libs",
+                    "subdir": "ksonnet-util"
+                }
+            },
+            "version": "master"
+        },
+        {
+            "name": "node-mixin",
+            "source": {
+                "git": {
+                    "remote": "https://github.com/prometheus/node_exporter",
+                    "subdir": "docs/node-mixin"
+                }
+            },
+            "version": "master"
+        },
+        {
+            "name": "prometheus-mixin",
+            "source": {
+                "git": {
+                    "remote": "https://github.com/prometheus/prometheus",
+                    "subdir": "documentation/prometheus-mixin"
+                }
+            },
+            "version": "master"
+        }
+
+    ]
+}

@@ -1,0 +1,94 @@
+{
+    "dependencies": [
+        {
+            "name": "consul-mixin",
+            "source": {
+                "git": {
+                    "remote": "https://github.com/grafana/jsonnet-libs",
+                    "subdir": "consul-mixin"
+                }
+            },
+            "version": "2b9b14d0d91adf8781e5b2c9b62dc8cb180a9886"
+        },
+        {
+            "name": "mixin-utils",
+            "source": {
+                "git": {
+                    "remote": "https://github.com/grafana/jsonnet-libs",
+                    "subdir": "mixin-utils"
+                }
+            },
+            "version": "2b9b14d0d91adf8781e5b2c9b62dc8cb180a9886"
+        },
+        {
+            "name": "consul",
+            "source": {
+                "git": {
+                    "remote": "https://github.com/grafana/jsonnet-libs",
+                    "subdir": "consul"
+                }
+            },
+            "version": "2b9b14d0d91adf8781e5b2c9b62dc8cb180a9886"
+        },
+        {
+            "name": "ksonnet-util",
+            "source": {
+                "git": {
+                    "remote": "https://github.com/grafana/jsonnet-libs",
+                    "subdir": "ksonnet-util"
+                }
+            },
+            "version": "2b9b14d0d91adf8781e5b2c9b62dc8cb180a9886"
+        },
+        {
+            "name": "node-mixin",
+            "source": {
+                "git": {
+                    "remote": "https://github.com/prometheus/node_exporter",
+                    "subdir": "docs/node-mixin"
+                }
+            },
+            "version": "e6f795798f0cd1ce9fc76573febf15e6d029ae06"
+        },
+        {
+            "name": "grafonnet",
+            "source": {
+                "git": {
+                    "remote": "https://github.com/grafana/grafonnet-lib",
+                    "subdir": "grafonnet"
+                }
+            },
+            "version": "69bc267211790a1c3f4ea6e6211f3e8ffe22f987"
+        },
+        {
+            "name": "grafana-builder",
+            "source": {
+                "git": {
+                    "remote": "https://github.com/grafana/jsonnet-libs",
+                    "subdir": "grafana-builder"
+                }
+            },
+            "version": "2b9b14d0d91adf8781e5b2c9b62dc8cb180a9886"
+        },
+        {
+            "name": "promgrafonnet",
+            "source": {
+                "git": {
+                    "remote": "https://github.com/kubernetes-monitoring/kubernetes-mixin",
+                    "subdir": "lib/promgrafonnet"
+                }
+            },
+            "version": "acac6762be477a7ec16a96ae5222dd365568d87d"
+        },
+        {
+            "name": "prometheus-mixin",
+            "source": {
+                "git": {
+                    "remote": "https://github.com/prometheus/prometheus",
+                    "subdir": "documentation/prometheus-mixin"
+                }
+            },
+            "version": "53ea6d63901b96a13bb79ff598c96af4a979adce"
+        }
+    ]
+}

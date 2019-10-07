@@ -28,24 +28,24 @@ Then run `cat $(k3d get-kubeconfig)` to see the created kubeconfig file and
 manually merge its settings into your local `$KUBECONFIG` (defaults to
 `~/.kube/config`).
 
-Now run `tk install` to provision the PVC controller:
+Now run `tk apply` to provision the PVC controller:
 
 ```bash
-tk install environments/provision/localhost.default
+tk apply environments/provision/localhost.default
 ```
 
-Finally, install the default environment:
+Finally, apply the default environment:
 
 ```bash
-tk install environments/default/localhost.default
+tk apply environments/default/localhost.default
 ```
 
 If you navigate to `http://localhost:8080`, you should see a landing page with
 all exposed services.
 
-You can then install any optional environments:
+You can then apply any optional environments:
 
-- `tk install environments/cortex/localhost.cortex`
+- `tk apply environments/cortex/localhost.cortex`
 
 ## Testing Images
 

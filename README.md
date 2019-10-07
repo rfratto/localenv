@@ -5,8 +5,14 @@ made for testing.
 
 ## Dependencies
 
+- Docker
 - [k3d](https://github.com/rancher/k3d)
 - [Tanka](https://github.com/grafana/tanka)
+
+### Docker Warning
+
+If running Docker on Windows or macOS, you'll have to increase the RAM allocated
+to the VM to at least 4GB.
 
 ## Getting Started
 

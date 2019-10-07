@@ -5,7 +5,7 @@ made for testing.
 
 ## Dependencies
 
-- [k3s](https://github.com/rancher/k3s)
+- [k3d](https://github.com/rancher/k3d)
 - [Tanka](https://github.com/grafana/tanka)
 
 ## Getting Started

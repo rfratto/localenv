@@ -59,7 +59,16 @@
                 }
             },
             "version": "master"
+        },
+        {
+            "name": "promtail",
+            "source": {
+                "git": {
+                    "remote": "https://github.com/grafana/loki",
+                    "subdir": "production/ksonnet/promtail"
+                }
+            },
+            "version": "v0.3.0"
         }
-
     ]
 }

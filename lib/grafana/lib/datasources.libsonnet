@@ -10,12 +10,12 @@
   grafana:: {
     datasource:: {
       // new creates a new prometheus datasource.
-      new(name, url, default=false, method='GET'):: {
+      new(name, url, default=false, method='GET', type='prometheus'):: {
         ['%s.yml' % name]: $.util.manifestYaml({
           apiVersion: 1,
           datasources: [{
             name: name,
-            type: 'prometheus',
+            type: type,
             access: 'proxy',
             url: url,
             isDefault: default,

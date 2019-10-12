@@ -13,7 +13,7 @@ local deployment = k.apps.v1beta1.deployment;
 
     cortex_flags+: {
       common: {
-        'log.level': 'debug',
+        'log.level': 'info',
       },
 
       ring: {

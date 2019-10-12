@@ -16,6 +16,11 @@ consul_mixin +
   // Add Cortex data source
   grafana_datasources+::
     $.grafana.datasource.new(
+      'Loki',
+      'http://loki.loki.svc.cluster.local',
+      type='loki',
+    ) +
+    $.grafana.datasource.new(
       'Cortex',
       'http://querier.cortex.svc.cluster.local/api/prom',
       false,

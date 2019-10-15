@@ -19,6 +19,16 @@
           proxy_redirect "/" "$scheme://$http_host/cortex/querier/";
         |||,
       },
+      {
+        title: 'Cortex Distributor',
+        path: 'cortex/api/distributor',
+        url: 'http://distributor.cortex.svc.cluster.local/',
+      },
+      {
+        title: 'Cortex Querier',
+        path: 'cortex/api/querier',
+        url: 'http://query-frontend.cortex.svc.cluster.local/',
+      },
     ],
   },
 }

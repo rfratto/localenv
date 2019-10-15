@@ -6,7 +6,7 @@ made for testing.
 ## Dependencies
 
 - Docker
-- [k3d](https://github.com/rancher/k3d)
+- [k3d v1.3.2](https://github.com/rancher/k3d)
 - [Tanka](https://github.com/grafana/tanka)
 
 ### Docker Warning

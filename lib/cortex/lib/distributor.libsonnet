@@ -15,8 +15,6 @@ cfg {
     {
       target: 'distributor',
 
-      'distributor.ingestion-rate-limit': 10000,
-      'distributor.ingestion-burst-size': 20000,
       'validation.reject-old-samples': true,
       'validation.reject-old-samples.max-age': '6h',
       'distributor.remote-timeout': '20s',
@@ -29,11 +27,11 @@ cfg {
       containerPort.newNamed('grpc', 9095),
     ]) +
     container.withArgsMixin(k.util.mapToFlags($.distributor_args)) +
-    k.util.resourcesRequests('250m', '250Mi') +
-    k.util.resourcesLimits('500m', '500Mi'),
+    k.util.resourcesRequests('100m', '100Mi') +
+    k.util.resourcesLimits('200m', '250Mi'),
 
   distributor_deployment:
-    deployment.new('distributor', 3, [
+    deployment.new('distributor', $._config.distributor_replicas, [
       $.distributor_container,
     ]) +
     deployment.mixin.spec.withMinReadySeconds(60) +
@@ -42,6 +40,5 @@ cfg {
     deployment.mixin.spec.template.spec.withTerminationGracePeriodSeconds(4800),
 
   distributor_service:
-    k.util.serviceFor($.distributor_deployment) +
-    service.mixin.spec.withClusterIp('None'),
+    k.util.serviceFor($.distributor_deployment),
 }

@@ -48,7 +48,7 @@ config {
     pvc.new() +
     pvc.mixin.metadata.withName('%s-data' % $._config.prometheus.name) +
     pvc.mixin.spec.withAccessModes('ReadWriteOnce') +
-    pvc.mixin.spec.resources.withRequests({ storage: '100Mi' }),
+    pvc.mixin.spec.resources.withRequests({ storage: '1Gi' }),
 
   local statefulSet = $.apps.v1beta1.statefulSet,
   local volumeMount = $.core.v1.volumeMount,

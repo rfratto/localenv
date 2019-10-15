@@ -6,9 +6,32 @@ local deployment = k.apps.v1beta1.deployment;
 {
   _config+:: {
     consul_replicas: 1,
+    distributor_replicas: 1,
+    querier_replicas: 1,
+    ingester_replicas: 1,
+    replication_factor: 1,
+
+    querier_concurrency: 8,
 
     cortex: {
-      schema: [],
+      schema: [
+        /*
+          {
+            from: '2019-10-01',
+            store: 'cassandra',
+            object_store: 's3',
+            schema: 'v10',
+            index: {
+              prefix: 'index_',
+              period: '6h',
+            },
+            chunks: {
+              prefix: 'chunks_',
+              period: '6h',
+            },
+          },
+        */
+      ],
     },
 
     cortex_flags+: {
@@ -24,7 +47,7 @@ local deployment = k.apps.v1beta1.deployment;
       },
 
       distributor: {
-        'distributor.replication-factor': 3,
+        'distributor.replication-factor': $._config.replication_factor,
         'distributor.shard-by-all-labels': true,
         'distributor.health-check-ingesters': true,
         'ring.heartbeat-timeout': '10m',
@@ -32,7 +55,22 @@ local deployment = k.apps.v1beta1.deployment;
       },
 
       storage: {
-        'chunk.storage-client': 'inmemory',
+        'config-yaml': '/etc/cortex/schema/config.yaml',
+      },
+
+      storageConfig: {
+        /*
+          's3.url':
+          'http://admin:password@minio.storage.svc.cluster.local:9000/cortex',
+          's3.force-path-style': true,
+
+          'cassandra.keyspace': 'cortex',
+          'cassandra.addresses': 'scylla.storage.svc.cluster.local',
+
+          'cassandra.timeout': '5s',
+          'cassandra.connect-timeout': '5s',
+        */
+
         'config-yaml': '/etc/cortex/schema/config.yaml',
       },
 
@@ -40,7 +78,7 @@ local deployment = k.apps.v1beta1.deployment;
         'querier.ingester-streaming': true,
         'querier.batch-iterators': true,
         'store.min-chunk-age': '15m',
-        'querier.query-ingesters-within': '8h',
+        'querier.query-ingesters-within': '12h',
         'store.cardinality-limit': 1e6,
         'store.max-query-length': '24h',
       },

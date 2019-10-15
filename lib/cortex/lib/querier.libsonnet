@@ -11,11 +11,17 @@ cfg {
   querier_args::
     $._config.cortex_flags.common +
     $._config.cortex_flags.ring +
-    $._config.cortex_flags.storage +
     $._config.cortex_flags.query +
     $._config.cortex_flags.distributor +
+    $._config.cortex_flags.storage +
+    $._config.cortex_flags.storageConfig +
     {
       target: 'querier',
+
+      // Limit to N/2 worker threads per frontend, as we have two frontends.
+      'querier.worker-parallelism': $._config.querier_concurrency / 2,
+      'querier.frontend-address': 'query-frontend.%(namespace)s.svc.cluster.local:9095' % $._config,
+      'querier.frontend-client.grpc-max-send-msg-size': 100 << 20,
     },
 
   querier_container::
@@ -25,15 +31,14 @@ cfg {
       containerPort.newNamed('grpc', 9095),
     ]) +
     container.withArgsMixin(k.util.mapToFlags($.querier_args)) +
-    k.util.resourcesRequests('250m', '250Mi') +
-    k.util.resourcesLimits('500m', '500Mi'),
+    k.util.resourcesRequests('100m', '100Mi') +
+    k.util.resourcesLimits('200m', '250Mi'),
 
   querier_deployment:
-    deployment.new('querier', 3, [
+    deployment.new('querier', $._config.querier_replicas, [
       $.querier_container,
     ]) +
     $.storage_config_mixin,
-
 
   querier_service:
     k.util.serviceFor($.querier_deployment),

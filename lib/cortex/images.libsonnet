@@ -7,5 +7,7 @@ local consul = import 'consul/consul.libsonnet';
     distributor: self.cortex,
     ingester: self.cortex,
     querier: self.cortex,
+    query_frontend: self.cortex,
+    table_manager: self.cortex,
   },
 }

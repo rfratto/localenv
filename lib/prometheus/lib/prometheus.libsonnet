@@ -50,7 +50,7 @@ config {
     pvc.mixin.spec.withAccessModes('ReadWriteOnce') +
     pvc.mixin.spec.resources.withRequests({ storage: '1Gi' }),
 
-  local statefulSet = $.apps.v1beta1.statefulSet,
+  local statefulSet = $.apps.v1.statefulSet,
   local volumeMount = $.core.v1.volumeMount,
 
   prometheus_statefulSet:

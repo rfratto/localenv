@@ -1,9 +1,7 @@
-local k = import 'ksonnet-util/kausal.libsonnet';
-
-local configMap = k.core.v1.configMap;
-local deployment = k.apps.v1beta1.deployment;
-
 {
+  local configMap = $.core.v1.configMap;
+  local deployment = $.apps.v1.deployment;
+
   _config+:: {
     consul_replicas: 1,
     distributor_replicas: 1,

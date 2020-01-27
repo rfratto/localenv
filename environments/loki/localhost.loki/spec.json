@@ -5,7 +5,7 @@
     "name": "loki"
   },
   "spec": {
-    "apiServer": "https://127.0.0.1:6443",
+    "apiServer": "https://localhost:6443",
     "namespace": "loki"
   }
 }

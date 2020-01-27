@@ -1,16 +1,9 @@
-local admin = import 'admin/admin.libsonnet';
-local grafana = import 'grafana/grafana.libsonnet';
-local node_mixin = import 'node-mixin/mixin.libsonnet';
-local prometheus_dashboards = import 'prometheus-mixin/dashboards.libsonnet';
-local prometheus = import 'prometheus/prometheus.libsonnet';
-local promtail = import 'promtail/promtail.libsonnet';
-
-promtail +
-node_mixin +
-admin +
-grafana +
-prometheus +
-prometheus_dashboards +
+(import 'github.com/grafana/loki/production/ksonnet/promtail/promtail.libsonnet') +
+(import 'github.com/prometheus/node_exporter/docs/node-mixin/mixin.libsonnet') +
+(import 'admin/admin.libsonnet') +
+(import 'grafana/grafana.libsonnet') +
+(import 'prometheus/prometheus.libsonnet') +
+(import 'github.com/prometheus/prometheus/documentation/prometheus-mixin/dashboards.libsonnet') +
 {
   local grafanaDashboards = super.grafanaDashboards,
 

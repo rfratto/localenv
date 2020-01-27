@@ -1,18 +1,16 @@
-local k = import 'ksonnet-util/kausal.libsonnet';
-local config = import 'config.libsonnet';
-local loki_config = import 'loki-config.libsonnet';
-local images = import 'images.libsonnet';
-
-local configMap = k.core.v1.configMap;
-local container = k.core.v1.container;
-local containerPort = k.core.v1.containerPort;
-local pvc = k.core.v1.persistentVolumeClaim;
-local deployment = k.apps.v1beta1.deployment;
-local volumeMount = k.core.v1.volumeMount;
-local volume = k.core.v1.volume;
-
-config + images + loki_config +
+(import 'github.com/grafana/jsonnet-libs/ksonnet-util/kausal.libsonnet') +
+(import 'config.libsonnet') +
+(import 'loki-config.libsonnet') +
+(import 'images.libsonnet') +
 {
+  local configMap = $.core.v1.configMap,
+  local container = $.core.v1.container,
+  local containerPort = $.core.v1.containerPort,
+  local pvc = $.core.v1.persistentVolumeClaim,
+  local deployment = $.apps.v1.deployment,
+  local volumeMount = $.core.v1.volumeMount,
+  local volume = $.core.v1.volume,
+
   loki_config_map:
     configMap.new('loki-config') +
     configMap.withData({

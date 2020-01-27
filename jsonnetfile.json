@@ -1,74 +1,77 @@
 {
-    "dependencies": [
-        {
-            "name": "consul-mixin",
-            "source": {
-                "git": {
-                    "remote": "https://github.com/grafana/jsonnet-libs",
-                    "subdir": "consul-mixin"
-                }
-            },
-            "version": "master"
-        },
-        {
-            "name": "mixin-utils",
-            "source": {
-                "git": {
-                    "remote": "https://github.com/grafana/jsonnet-libs",
-                    "subdir": "mixin-utils"
-                }
-            },
-            "version": "master"
-        },
-        {
-            "name": "consul",
-            "source": {
-                "git": {
-                    "remote": "https://github.com/grafana/jsonnet-libs",
-                    "subdir": "consul"
-                }
-            },
-            "version": "master"
-        },
-        {
-            "name": "ksonnet-util",
-            "source": {
-                "git": {
-                    "remote": "https://github.com/grafana/jsonnet-libs",
-                    "subdir": "ksonnet-util"
-                }
-            },
-            "version": "master"
-        },
-        {
-            "name": "node-mixin",
-            "source": {
-                "git": {
-                    "remote": "https://github.com/prometheus/node_exporter",
-                    "subdir": "docs/node-mixin"
-                }
-            },
-            "version": "master"
-        },
-        {
-            "name": "prometheus-mixin",
-            "source": {
-                "git": {
-                    "remote": "https://github.com/prometheus/prometheus",
-                    "subdir": "documentation/prometheus-mixin"
-                }
-            },
-            "version": "master"
-        },
-        {
-            "name": "promtail",
-            "source": {
-                "git": {
-                    "remote": "https://github.com/grafana/loki",
-                    "subdir": "production/ksonnet/promtail"
-                }
-            },
-            "version": "v0.3.0"
+  "dependencies": [
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/grafana/jsonnet-libs",
+          "subdir": "consul"
         }
-    ]
+      },
+      "version": "master"
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/grafana/jsonnet-libs",
+          "subdir": "consul-mixin"
+        }
+      },
+      "version": "master"
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/grafana/jsonnet-libs",
+          "subdir": "ksonnet-util"
+        }
+      },
+      "version": "master"
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/grafana/jsonnet-libs",
+          "subdir": "mixin-utils"
+        }
+      },
+      "version": "master"
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/grafana/loki",
+          "subdir": "production/ksonnet/promtail"
+        }
+      },
+      "version": "v0.3.0"
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/ksonnet/ksonnet-lib",
+          "subdir": "ksonnet.beta.4"
+        }
+      },
+      "version": "master"
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/prometheus/node_exporter",
+          "subdir": "docs/node-mixin"
+        }
+      },
+      "version": "master"
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/prometheus/prometheus",
+          "subdir": "documentation/prometheus-mixin"
+        }
+      },
+      "version": "master"
+    }
+  ],
+  "legacyImports": true
 }

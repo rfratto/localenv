@@ -1,13 +1,10 @@
-local cfg = import '../config.libsonnet';
-local k = import 'ksonnet-util/kausal.libsonnet';
+{
+  local configMap = $.core.v1.configMap,
+  local container = $.core.v1.container,
+  local containerPort = $.core.v1.containerPort,
+  local deployment = $.apps.v1.deployment,
+  local service = $.core.v1.service,
 
-local configMap = k.core.v1.configMap;
-local container = k.core.v1.container;
-local containerPort = k.core.v1.containerPort;
-local deployment = k.apps.v1beta1.deployment;
-local service = k.core.v1.service;
-
-cfg {
   ingester_args::
     $._config.cortex_flags.common +
     $._config.cortex_flags.ring +

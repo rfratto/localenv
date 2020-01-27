@@ -1,15 +1,12 @@
-local images = import 'images.libsonnet';
-local k = import 'ksonnet-util/kausal.libsonnet';
-
-
-k + images +
+(import 'github.com/grafana/jsonnet-libs/ksonnet-util/kausal.libsonnet') +
+(import 'images.libsonnet') +
 {
   _util:: {
     configMapVolumeMount(configMap, path, volumeMountMixin={})::
       local name = configMap.metadata.name,
             hash = std.md5(std.toString(configMap)),
             container = $.core.v1.container,
-            deployment = $.extensions.v1beta1.deployment,
+            deployment = $.apps.v1.deployment,
             volumeMount = $.core.v1.volumeMount,
             volume = $.core.v1.volume,
             addMount(c) = c + container.withVolumeMountsMixin(
@@ -34,7 +31,7 @@ k + images +
   local pvc = $.core.v1.persistentVolumeClaim,
   local container = $.core.v1.container,
   local containerPort = $.core.v1.containerPort,
-  local deployment = $.apps.v1beta1.deployment,
+  local deployment = $.apps.v1.deployment,
   local volumeMount = $.core.v1.volumeMount,
   local volume = $.core.v1.volume,
 

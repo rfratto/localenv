@@ -9,7 +9,5 @@
     admin_services+: [
       { title: 'Grafana', path: 'grafana', url: 'http://grafana.%(namespace)s.svc.cluster.local/' % $._config, allowWebsockets: true },
     ],
-
-
   },
 }

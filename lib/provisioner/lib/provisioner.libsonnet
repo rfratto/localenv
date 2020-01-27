@@ -57,7 +57,7 @@
       { name: 'POD_NAMESPACE', value: $._config.namespace },
     ]),
 
-  local deployment = $.apps.v1beta1.deployment,
+  local deployment = $.apps.v1.deployment,
 
   provisioner_deployment:
     deployment.new('provisioner', 1, [$.provisioner_container]) +

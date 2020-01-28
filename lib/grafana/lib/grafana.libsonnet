@@ -32,11 +32,25 @@
   grafanaDashboards+:: $.dashboards + $.grafana_dashboards,
 
   grafana_dashboard_config_map:
-    configMap.new('dashboards') +
-    configMap.withDataMixin({
-      [name]: std.toString($.grafanaDashboards[name])
-      for name in std.objectFields($.grafanaDashboards)
-    }),
+    if $._config.dashboard_config_maps > 0
+    then {}
+    else
+      configMap.new('dashboards') +
+      configMap.withDataMixin({
+        [name]: std.toString($.grafanaDashboards[name])
+        for name in std.objectFields($.grafanaDashboards)
+      }),
+
+  grafana_dashboards_config_maps: {
+    ['dashboard-%d' % shard]:
+      configMap.new('dashboards-%d' % shard) +
+      configMap.withDataMixin({
+        [name]: std.toString($.grafanaDashboards[name])
+        for name in std.objectFields($.grafanaDashboards)
+        if std.codepoint(std.md5(name)[1]) % $._config.dashboard_config_maps == shard
+      })
+    for shard in std.range(0, $._config.dashboard_config_maps - 1)
+  },
 
   grafana_datasource_config_map:
     configMap.new('grafana-datasources') +
@@ -83,7 +97,19 @@
     $.util.configMapVolumeMount(self.grafana_config_map, '/etc/grafana-config') +
     $.util.configMapVolumeMount(self.grafana_datasource_config_map, '%(provisioning_dir)s/datasources' % $._config.grafana) +
     $.util.configMapVolumeMount(self.grafana_dashboard_provisioning_config_map, '%(provisioning_dir)s/dashboards' % $._config.grafana) +
-    $.util.configMapVolumeMount(self.grafana_dashboard_config_map, '/grafana/dashboards') +
+    (
+      if $._config.dashboard_config_maps == 0
+      then $.util.configMapVolumeMount(self.grafana_dashboard_config_map, '/grafana/dashboards')
+      else
+        std.foldr(
+          function(m, acc) m + acc,
+          [
+            $.util.configVolumeMount('dashboards-%d' % shard, '/grafana/dashboards/%d' % shard)
+            for shard in std.range(0, $._config.dashboard_config_maps - 1)
+          ],
+          {}
+        )
+    ) +
     $.util.podPriority('critical'),
 
   grafana_service:

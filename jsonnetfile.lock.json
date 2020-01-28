@@ -73,6 +73,16 @@
     {
       "source": {
         "git": {
+          "remote": "https://github.com/grafana/loki",
+          "subdir": "production/loki-mixin"
+        }
+      },
+      "version": "8cd5c5b940337f361217458d240424fbb3844766",
+      "sum": "ZOw0dAy7fZAyNTJDE5nD9lRyAW28JJOiAtL+KiJdIZY="
+    },
+    {
+      "source": {
+        "git": {
           "remote": "https://github.com/ksonnet/ksonnet-lib",
           "subdir": "ksonnet.beta.4"
         }

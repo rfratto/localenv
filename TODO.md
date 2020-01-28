@@ -17,6 +17,7 @@ localenv.
 - [ ] Migrate `environments/storage` to `environments/localenv`
 - [ ] Use Loki microservices (and remote storage)
 - [ ] Conditionally enable tablemanager in Cortex
+- [x] Promtail dashboard?
 
 ## Change `environments` structure
 

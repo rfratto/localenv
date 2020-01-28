@@ -1,12 +1,18 @@
 local settings = import 'settings.libsonnet';
 local default = import 'default/default.libsonnet';
+local cortex_mixin = import 'cortex-mixin/mixin.libsonnet';
+local loki_mixin = import
+'github.com/grafana/loki/production/loki-mixin/mixin.libsonnet';
 local promtail = import 'github.com/grafana/loki/production/ksonnet/promtail/promtail.libsonnet';
 
 default +
+(if settings.cortex.enabled then cortex_mixin else {}) +
 (if settings.loki.enabled then promtail else {}) +
+(if settings.loki.enabled then loki_mixin else {}) +
 {
   _config+:: {
     namespace: 'default',
+    dashboard_config_maps: 8,
     prometheus+: {
       retention: '1d',
     },
@@ -44,7 +50,8 @@ default +
 
   prometheus_config+:: {
     local cortex_remote_write = (
-      if settings.prometheus.remote_write_cortex
+      if settings.prometheus.remote_write_cortex &&
+         settings.cortex.enabled
       then [{ url:
       'http://distributor.cortex.svc.cluster.local/api/prom/push' }]
       else []

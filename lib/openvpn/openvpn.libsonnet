@@ -34,9 +34,11 @@
   local deployment = $.apps.v1.deployment,
   local volumeMount = $.core.v1.volumeMount,
   local volume = $.core.v1.volume,
+  local service = $.core.v1.service,
 
   openvpn_config_map:
     configMap.new('openvpn-config') +
+    configMap.mixin.metadata.withNamespace($._config.namespace) +
     configMap.withData({
       'configure.sh': (importstr './files/configure.sh'),
       'newClientCert.sh': (importstr './files/newClientCert.sh'),
@@ -66,6 +68,7 @@
     { apiVersion: 'v1', kind: 'PersistentVolumeClaim' } +
     pvc.new() +
     pvc.mixin.metadata.withName('openvpn-certs') +
+    pvc.mixin.metadata.withNamespace($._config.namespace) +
     pvc.mixin.spec.withAccessModes('ReadWriteOnce') +
     pvc.mixin.spec.resources.withRequests({ storage: '10Gi' }),
 
@@ -73,6 +76,7 @@
     deployment.new('openvpn', 1, [
       $.openvpn_container,
     ]) +
+    deployment.mixin.metadata.withNamespace($._config.namespace) +
     deployment.mixin.spec.template.spec.withVolumesMixin([
       volume.fromPersistentVolumeClaim('openvpn-certs', 'openvpn-certs'),
     ]) +
@@ -80,5 +84,6 @@
     deployment.mixin.spec.template.spec.withTerminationGracePeriodSeconds(4800),
 
   openvpn_service:
-    k.util.serviceFor($.openvpn_deployment),
+    $.util.serviceFor($.openvpn_deployment) +
+    service.mixin.metadata.withNamespace($._config.namespace),
 }

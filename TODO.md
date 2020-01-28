@@ -13,7 +13,7 @@ localenv.
 
 - [x] Migrate `environments/cortex` to `environments/localenv`
 - [x] Migrate `environments/loki` to `environments/localenv`
-- [ ] Migrate `environments/openvpn` to `environments/localenv`
+- [x] Migrate `environments/openvpn` to `environments/localenv`
 - [ ] Migrate `environments/storage` to `environments/localenv`
 - [ ] Use Loki microservices (and remote storage)
 - [ ] Conditionally enable tablemanager in Cortex

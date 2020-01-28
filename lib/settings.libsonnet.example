@@ -28,5 +28,11 @@
 
     // Extra sections to add to remote_write.
     extra_remote_writes: [],
+  },
+
+  openvpn: {
+    // Deploys an OpenVPN instance that allows a client to
+    // hook into the Kubernetes service network.
+    enabled: false,
   }
 }

@@ -1,12 +1,12 @@
 {
   _images+:: {
-    promtail: 'grafana/promtail:v0.2.0',
+    promtail: 'grafana/promtail:v1.2.0',
   },
 
   _config+:: {
     prometheus_insecure_skip_verify: false,
     promtail_config: {
-      clients:[{
+      clients: [{
         username:: '',
         password:: '',
         scheme:: 'https',
@@ -18,5 +18,8 @@
         docker: {},
       }],
     },
+    promtail_cluster_role_name: 'promtail',
+    promtail_configmap_name: 'promtail',
+    promtail_pod_name: 'promtail',
   },
 }

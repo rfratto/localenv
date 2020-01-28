@@ -1,6 +1,6 @@
-local k = import 'ksonnet-util/kausal.libsonnet';
-local config = import 'config.libsonnet';
 local scrape_config = import './scrape_config.libsonnet';
+local config = import 'config.libsonnet';
+local k = import 'ksonnet-util/kausal.libsonnet';
 
 k + config + scrape_config {
   namespace:
@@ -9,7 +9,7 @@ k + config + scrape_config {
   local policyRule = $.rbac.v1beta1.policyRule,
 
   promtail_rbac:
-    $.util.rbac('promtail', [
+    $.util.rbac($._config.promtail_cluster_role_name, [
       policyRule.new() +
       policyRule.withApiGroups(['']) +
       policyRule.withResources(['nodes', 'nodes/proxy', 'services', 'endpoints', 'pods']) +
@@ -19,21 +19,21 @@ k + config + scrape_config {
   promtail_config+:: {
     local service_url(client) =
       if std.objectHasAll(client, 'username') then
-        '%(scheme)s://%(username)s:%(password)s@%(hostname)s/api/prom/push' % client
+        '%(scheme)s://%(username)s:%(password)s@%(hostname)s/loki/api/v1/push' % client
       else
-        '%(scheme)s://%(hostname)s/api/prom/push' % client,
+        '%(scheme)s://%(hostname)s/loki/api/v1/push' % client,
 
-    local client_config(client) = client + {
+    local client_config(client) = client {
       url: service_url(client),
     },
 
-    clients: std.map(client_config,$._config.promtail_config.clients)
+    clients: std.map(client_config, $._config.promtail_config.clients),
   },
 
   local configMap = $.core.v1.configMap,
 
   promtail_config_map:
-    configMap.new('promtail') +
+    configMap.new($._config.promtail_configmap_name) +
     configMap.withData({
       'promtail.yml': $.util.manifestYaml($.promtail_config),
     }),
@@ -58,12 +58,12 @@ k + config + scrape_config {
     container.mixin.securityContext.withPrivileged(true) +
     container.mixin.securityContext.withRunAsUser(0),
 
-  local daemonSet = $.extensions.v1beta1.daemonSet,
+  local daemonSet = $.apps.v1.daemonSet,
 
   promtail_daemonset:
-    daemonSet.new('promtail', [$.promtail_container]) +
-    daemonSet.mixin.spec.template.spec.withServiceAccount('promtail') +
-    $.util.configVolumeMount('promtail', '/etc/promtail') +
+    daemonSet.new($._config.promtail_pod_name, [$.promtail_container]) +
+    daemonSet.mixin.spec.template.spec.withServiceAccount($._config.promtail_cluster_role_name) +
+    $.util.configVolumeMount($._config.promtail_configmap_name, '/etc/promtail') +
     $.util.hostVolumeMount('varlog', '/var/log', '/var/log') +
     $.util.hostVolumeMount('varlibdockercontainers', $._config.promtail_config.container_root_path + '/containers', $._config.promtail_config.container_root_path + '/containers', readOnly=true),
 }

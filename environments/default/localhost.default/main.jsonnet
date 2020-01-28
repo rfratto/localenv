@@ -1,12 +1,10 @@
 local consul_mixin = import 'consul-mixin/mixin.libsonnet';
 local cortex_mixin = import 'cortex-mixin/mixin.libsonnet';
 local default = import 'default/default.libsonnet';
-local temp = import 'temp.libsonnet';
 
 default +
 cortex_mixin +
 consul_mixin +
-temp +
 {
   _config+:: {
     namespace: 'default',
@@ -31,7 +29,7 @@ temp +
   prometheus_config+:: {
     remote_write+: [
       // {
-        // url: 'http://distributor.cortex.svc.cluster.local/api/prom/push',
+      // url: 'http://distributor.cortex.svc.cluster.local/api/prom/push',
       // },
     ],
   },

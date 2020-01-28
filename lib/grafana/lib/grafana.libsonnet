@@ -37,7 +37,10 @@
     else
       configMap.new('dashboards') +
       configMap.withDataMixin({
-        [name]: std.toString($.grafanaDashboards[name])
+        [name]: std.toString(
+          $.grafanaDashboards[name] +
+          { uid: std.substr(std.md5(std.toString($.grafanaDashboards[name])), 0, 9) }
+        )
         for name in std.objectFields($.grafanaDashboards)
       }),
 
@@ -45,7 +48,10 @@
     ['dashboard-%d' % shard]:
       configMap.new('dashboards-%d' % shard) +
       configMap.withDataMixin({
-        [name]: std.toString($.grafanaDashboards[name])
+        [name]: std.toString(
+          $.grafanaDashboards[name] +
+          { uid: std.substr(std.md5(std.toString($.grafanaDashboards[name])), 0, 9) }
+        )
         for name in std.objectFields($.grafanaDashboards)
         if std.codepoint(std.md5(name)[1]) % $._config.dashboard_config_maps == shard
       })

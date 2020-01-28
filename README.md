@@ -83,3 +83,16 @@ $ kubectl -ncortex rollout restart \
   deployment/querier \
   deployment/distributor
 ```
+
+## Note on Tanka Structure
+
+Tanka is generally written for deploying consistent and reproducable
+environments. This concept doesn't work for `localenv` where different
+machines may have deployments in slightly different states to meet their
+current testing needs.
+
+To solve the problem of introducing git diffs or accidentally checking in
+temporary changes, this repo introduces a `settings.libsonnet` file to tweak what gets deployed. This is a bad idea for production; `settings.libsonnet` is exempt from version control and allows multiple users to deploy multiple different environments.
+
+Please don't use this repository as an inspiration for your production
+environment; follow the recommended Tanka guidelines instead.

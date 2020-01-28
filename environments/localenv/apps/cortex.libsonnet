@@ -1,4 +1,5 @@
 local cortex = import 'cortex/cortex.libsonnet';
+local settings = import 'settings.libsonnet';
 
 cortex {
   _config+:: {
@@ -13,4 +14,7 @@ cortex {
   ingester_args+:: {
     'log.level': 'info',
   },
-}
+
+  ns:
+    $.core.v1.namespace.new($._config.namespace),
+} + settings.cortex.extra_config

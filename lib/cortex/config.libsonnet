@@ -1,6 +1,6 @@
 {
-  local configMap = $.core.v1.configMap;
-  local deployment = $.apps.v1.deployment;
+  local configMap = $.core.v1.configMap,
+  local deployment = $.apps.v1.deployment,
 
   _config+:: {
     consul_replicas: 1,
@@ -85,6 +85,7 @@
 
   storage_config:
     configMap.new('schema') +
+    configMap.mixin.metadata.withNamespace($._config.namespace) +
     configMap.withData({
       'config.yaml': $.util.manifestYaml({
         configs: $._config.cortex.schema,

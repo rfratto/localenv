@@ -1,5 +1,5 @@
 {
   _images+:: {
-    loki: 'grafana/loki:v0.3.0',
+    loki: 'grafana/loki:v1.3.0',
   },
 }

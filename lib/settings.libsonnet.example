@@ -1,0 +1,32 @@
+{
+  // Defines extra settings for cortex
+  cortex: {
+    // Deploys Cortex.
+    enabled: true,
+
+    // Configures cortex to use minio and scylla.
+    enable_storage: true,
+
+    // All values here will be merged into the Cortex environment.
+    extra_config: {},
+  },
+
+  loki: {
+    // Deploys Loki.
+    enabled: true,
+
+    // Configures Loki to use minio and scylla.
+    enable_storage: true,
+
+    // All values here will be merged into the Loki environment.
+    extra_config: {},
+  }
+
+  prometheus: {
+    // Configures remote_write to Cortex.
+    remote_write_cortex: true,
+
+    // Extra sections to add to remote_write.
+    extra_remote_writes: [],
+  }
+}

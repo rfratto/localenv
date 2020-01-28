@@ -30,27 +30,29 @@
   ingester_container::
     container.new('ingester', $._images.ingester) +
     container.withPorts([
-      containerPort.newNamed('http-metrics', 80),
-      containerPort.newNamed('grpc', 9095),
+      containerPort.newNamed(name='http-metrics', containerPort=80),
+      containerPort.newNamed(name='grpc', containerPort=9095),
     ]) +
-    container.withArgsMixin(k.util.mapToFlags($.ingester_args)) +
+    container.withArgsMixin($.util.mapToFlags($.ingester_args)) +
     container.mixin.readinessProbe.httpGet.withPath('/ready') +
     container.mixin.readinessProbe.httpGet.withPort(80) +
     container.mixin.readinessProbe.withInitialDelaySeconds(15) +
     container.mixin.readinessProbe.withTimeoutSeconds(1) +
-    k.util.resourcesRequests('100m', '100Mi') +
-    k.util.resourcesLimits('200m', '250Mi'),
+    $.util.resourcesRequests('100m', '100Mi') +
+    $.util.resourcesLimits('200m', '250Mi'),
 
   ingester_deployment:
     deployment.new('ingester', $._config.ingester_replicas, [
       $.ingester_container,
     ]) +
     $.storage_config_mixin +
+    deployment.mixin.metadata.withNamespace($._config.namespace) +
     deployment.mixin.spec.withMinReadySeconds(15) +
     deployment.mixin.spec.strategy.rollingUpdate.withMaxSurge(0) +
     deployment.mixin.spec.strategy.rollingUpdate.withMaxUnavailable(1) +
     deployment.mixin.spec.template.spec.withTerminationGracePeriodSeconds(4800),
 
   ingester_service:
-    k.util.serviceFor($.ingester_deployment),
+    $.util.serviceFor($.ingester_deployment) +
+    service.mixin.metadata.withNamespace($._config.namespace),
 }

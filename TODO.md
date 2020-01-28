@@ -3,9 +3,20 @@
 This is a loosely organized document describing the work I'd like to do for
 localenv.
 
+## Goals
+
 - [ ] Update documentation to describe OpenVPN usage for debugging
       Cortex (or Loki)
 - [ ] Change `environments` structure (see below for thoughts)
+
+## Tasks
+
+- [x] Migrate `environments/cortex` to `environments/localenv`
+- [x] Migrate `environments/loki` to `environments/localenv`
+- [ ] Migrate `environments/openvpn` to `environments/localenv`
+- [ ] Migrate `environments/storage` to `environments/localenv`
+- [ ] Use Loki microservices (and remote storage)
+- [ ] Conditionally enable tablemanager in Cortex
 
 ## Change `environments` structure
 

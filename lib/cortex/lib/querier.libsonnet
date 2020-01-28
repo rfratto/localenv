@@ -24,19 +24,21 @@
   querier_container::
     container.new('querier', $._images.querier) +
     container.withPorts([
-      containerPort.newNamed('http-metrics', 80),
-      containerPort.newNamed('grpc', 9095),
+      containerPort.newNamed(name='http-metrics', containerPort=80),
+      containerPort.newNamed(name='grpc', containerPort=9095),
     ]) +
-    container.withArgsMixin(k.util.mapToFlags($.querier_args)) +
-    k.util.resourcesRequests('100m', '100Mi') +
-    k.util.resourcesLimits('200m', '250Mi'),
+    container.withArgsMixin($.util.mapToFlags($.querier_args)) +
+    $.util.resourcesRequests('100m', '100Mi') +
+    $.util.resourcesLimits('200m', '250Mi'),
 
   querier_deployment:
     deployment.new('querier', $._config.querier_replicas, [
       $.querier_container,
     ]) +
+    deployment.mixin.metadata.withNamespace($._config.namespace) +
     $.storage_config_mixin,
 
   querier_service:
-    k.util.serviceFor($.querier_deployment),
+    $.util.serviceFor($.querier_deployment) +
+    service.mixin.metadata.withNamespace($._config.namespace),
 }

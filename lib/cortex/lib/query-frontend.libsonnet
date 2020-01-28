@@ -39,19 +39,21 @@
   query_frontend_container::
     container.new('query-frontend', $._images.query_frontend) +
     container.withPorts([
-      containerPort.newNamed('http-metrics', 80),
-      containerPort.newNamed('grpc', 9095),
+      containerPort.newNamed(name='http-metrics', containerPort=80),
+      containerPort.newNamed(name='grpc', containerPort=9095),
     ]) +
-    container.withArgsMixin(k.util.mapToFlags($.query_frontend_args)) +
-    k.util.resourcesRequests('100m', '100Mi') +
-    k.util.resourcesLimits('200m', '250Mi'),
+    container.withArgsMixin($.util.mapToFlags($.query_frontend_args)) +
+    $.util.resourcesRequests('100m', '100Mi') +
+    $.util.resourcesLimits('200m', '250Mi'),
 
   query_frontend_deployment:
     deployment.new('query-frontend', 2, [
       $.query_frontend_container,
     ]) +
+    deployment.mixin.metadata.withNamespace($._config.namespace) +
     $.storage_config_mixin,
 
   query_frontend_service:
-    k.util.serviceFor($.query_frontend_deployment),
+    $.util.serviceFor($.query_frontend_deployment) +
+    service.mixin.metadata.withNamespace($._config.namespace),
 }

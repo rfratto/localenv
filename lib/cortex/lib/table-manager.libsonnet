@@ -6,7 +6,7 @@
   local service = $.core.v1.service,
 
   table_manager_args::
-    $._config.cortex_flags.storageConfig +
+    $._config.cortex_flags.storageConfig
     {
       target: 'table-manager',
 
@@ -20,17 +20,19 @@
   table_manager_container::
     container.new('table-manager', $._images.table_manager) +
     container.withPorts([
-      containerPort.newNamed('http-metrics', 80),
-      containerPort.newNamed('grpc', 9095),
+      containerPort.newNamed(name='http-metrics', containerPort=80),
+      containerPort.newNamed(name='grpc', containerPort=9095),
     ]) +
-    container.withArgsMixin(k.util.mapToFlags($.table_manager_args)) +
-    k.util.resourcesRequests('100m', '100Mi') +
-    k.util.resourcesLimits('200m', '200Mi'),
+    container.withArgsMixin($.util.mapToFlags($.table_manager_args)) +
+    $.util.resourcesRequests('100m', '100Mi') +
+    $.util.resourcesLimits('200m', '200Mi'),
 
   table_manager_deployment:
     deployment.new('table-manager', 1, [$.table_manager_container]) +
+    deployment.mixin.metadata.withNamespace($._config.namespace) +
     $.storage_config_mixin,
 
   table_manager_service:
-    k.util.serviceFor($.table_manager_deployment),
+    $.util.serviceFor($.table_manager_deployment) +
+    service.mixin.metadata.withNamespace($._config.namespace),
 }

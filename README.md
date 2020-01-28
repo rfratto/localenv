@@ -3,6 +3,9 @@
 `localenv` is a Tanka environment made for running a development stack locally
 made for testing.
 
+This repo has no guarantees of stability; breaking changes may be made
+at any time.
+
 ## Dependencies
 
 - Docker
@@ -16,36 +19,36 @@ to the VM to at least 4GB.
 
 ## Getting Started
 
-Run the following to create your cluster:
+Run the following scripts to create your cluster and add it to your
+~/.kube/config file:
 
 ```bash
-k3d create \
-  --publish 8080:30080 \
-  -v /tmp/local-path-provisioner/data/:/tmp/local-path-provisioner/data/
+make bootstrap
+./scripts/create_k3d.bash
+./scripts/merge_k3d_config.bash
 ```
 
-Then run `cat $(k3d get-kubeconfig)` to see the created kubeconfig file and
-manually merge its settings into your local `$KUBECONFIG` (defaults to
-`~/.kube/config`).
+The first command, `make bootstrap`, generates a `lib/settings.libsonnet`
+file. This file is used throughout all the environments and configures the
+behavior of how certain environments are deployed. Please read the file and
+configure it to your liking, although the defaults should be fine for
+playing around with localenv.
 
-Now run `tk apply` to provision the PVC controller:
+First, delete the local path provisioner `k3d` comes with and apply
+`environments/provision`:
 
 ```bash
+k delete storageclass local-path
 tk apply environments/provision/localhost.default
 ```
 
-Finally, apply the default environment:
+Wait a little bit for this to finish, then apply `environments/localenv`:
 
 ```bash
-tk apply environments/default/localhost.default
+tk apply environments/localenv/localhost.default
 ```
 
-If you navigate to `http://localhost:8080`, you should see a landing page with
-all exposed services.
-
-You can then apply any optional environments:
-
-- `tk apply environments/cortex/localhost.cortex`
+If you navigate to `http://localhost:8080`, you should see a landing page with all exposed services.
 
 ## Testing Images
 

@@ -58,7 +58,7 @@
       '/etc/openvpn/setup/configure.sh',
     ]) +
     container.withPorts([
-      containerPort.newNamed('openvpn', 443),
+      containerPort.newNamed(name='openvpn', containerPort=443),
     ]) +
     container.withVolumeMountsMixin([
       volumeMount.new('openvpn-certs', '/etc/openvpn/certs'),
